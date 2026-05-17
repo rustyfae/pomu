@@ -12,7 +12,7 @@ TOKEN = os.getenv("TOKEN")
 intents = discord.Intents.all()
 
 bot = commands.Bot(
-    command_prefix='!',
+    command_prefix='!pomo ',
     intents=intents,
     help_command=None
 )
@@ -35,7 +35,6 @@ async def on_ready():
     )
 
     print(f'{bot.user} is online!')
-    
 
 
 @bot.command()
@@ -60,16 +59,16 @@ Start 25 minute focus + 5 minute break
 `!pomo 25 5 4`
 Start looping pomodoro
 
-`!pause`
+`!pomo pause`
 Pause timer
 
-`!resume`
+`!pomo resume`
 Resume timer
 
-`!stop`
+`!pomo stop`
 Stop current session
 
-`!status`
+`!pomo status`
 Check current timer
             """,
             inline=False
@@ -77,12 +76,12 @@ Check current timer
 
         embed.set_footer(text="Stay focused ✨")
 
-        await ctx.send(embed=embed)
+        await ctx.send(embed=embed, delete_after=10)
         return
 
     # VC CHECK
     if not ctx.author.voice:
-        await ctx.send("Join a VC first!")
+        await ctx.send("Join a VC first!", delete_after=5)
         return
 
     # START TIMER
@@ -96,7 +95,7 @@ Check current timer
             cycles = int(arg3)
 
     except:
-        await ctx.send("Usage: `!pomo 25 5 4`")
+        await ctx.send("Usage: `!pomo 25 5 4`", delete_after=5)
         return
 
     active_sessions[ctx.author.id] = {
@@ -117,9 +116,8 @@ Check current timer
         session["phase"] = "study"
         session["remaining"] = study_time * 60
 
-
         embed = discord.Embed(
-         title="📚 Focus Session Started",
+            title="📚 Focus Session Started",
             description=(
                 f"⏳ {study_time} minute study / "
                 f"{break_time} minute break"
@@ -140,8 +138,9 @@ Check current timer
         session["message"] = timer_message
 
         await ctx.send(
-    f"📚 Cycle {cycle + 1}/{cycles} started!"
-)
+            f"📚 Cycle {cycle + 1}/{cycles} started!",
+            delete_after=5
+        )
 
         # STUDY TIMER
         while session["remaining"] > 0:
@@ -154,7 +153,8 @@ Check current timer
 
                 await ctx.send(
                     f"🛑 {ctx.author.mention} left VC.\n"
-                    f"Pomodoro stopped."
+                    f"Pomodoro stopped.",
+                    delete_after=5
                 )
 
                 del active_sessions[ctx.author.id]
@@ -199,7 +199,8 @@ Check current timer
 
         await ctx.send(
             f'☕ {ctx.author.mention} Focus session ended!\n'
-            f'Take a {break_time} minute break!'
+            f'Take a {break_time} minute break!',
+            delete_after=10
         )
 
         # BREAK TIMER
@@ -215,7 +216,8 @@ Check current timer
 
                 await ctx.send(
                     f"🛑 {ctx.author.mention} left VC.\n"
-                    f"Pomodoro stopped."
+                    f"Pomodoro stopped.",
+                    delete_after=5
                 )
 
                 del active_sessions[ctx.author.id]
@@ -257,17 +259,20 @@ Check current timer
 
             if session["remaining"] % 5 == 0:
                 await session["message"].edit(embed=live_embed)
-                
+
         await ctx.send(
             f'📚 {ctx.author.mention} Break over!\n'
-            f'Back to studying!'
+            f'Back to studying!',
+            delete_after=10
         )
 
     await ctx.send(
-        f"🎉 {ctx.author.mention} completed all pomodoro cycles!"
+        f"🎉 {ctx.author.mention} completed all pomodoro cycles!",
+        delete_after=10
     )
 
     del active_sessions[ctx.author.id]
+
 
 @bot.command()
 async def pause(ctx):
@@ -276,17 +281,18 @@ async def pause(ctx):
     session = active_sessions.get(ctx.author.id)
 
     if not session:
-        await ctx.send("❌ No active pomodoro.")
+        await ctx.send("❌ No active pomodoro.", delete_after=5)
         return
 
     if session["paused"]:
-        await ctx.send("⏸️ Pomodoro already paused.")
+        await ctx.send("⏸️ Pomodoro already paused.", delete_after=5)
         return
 
     session["paused"] = True
 
     await ctx.send(
-        f'⏸️ {ctx.author.mention} Pomodoro paused.'
+        f'⏸️ {ctx.author.mention} Pomodoro paused.',
+        delete_after=5
     )
 
 
@@ -297,17 +303,18 @@ async def resume(ctx):
     session = active_sessions.get(ctx.author.id)
 
     if not session:
-        await ctx.send("❌ No active pomodoro.")
+        await ctx.send("❌ No active pomodoro.", delete_after=5)
         return
 
     if not session["paused"]:
-        await ctx.send("▶️ Pomodoro is already running.")
+        await ctx.send("▶️ Pomodoro is already running.", delete_after=5)
         return
 
     session["paused"] = False
 
     await ctx.send(
-        f'▶️ {ctx.author.mention} Pomodoro resumed.'
+        f'▶️ {ctx.author.mention} Pomodoro resumed.',
+        delete_after=5
     )
 
 
@@ -318,7 +325,7 @@ async def status(ctx):
     session = active_sessions.get(ctx.author.id)
 
     if not session:
-        await ctx.send("❌ No active pomodoro.")
+        await ctx.send("❌ No active pomodoro.", delete_after=5)
         return
 
     minutes = session["remaining"] // 60
@@ -339,7 +346,8 @@ async def status(ctx):
     await ctx.send(
         f"{phase}\n"
         f"⏳ {minutes:02}:{seconds:02} remaining\n"
-        f"{state}"
+        f"{state}",
+        delete_after=15
     )
 
 
@@ -348,11 +356,12 @@ async def stop(ctx):
     await ctx.message.delete()
 
     if ctx.author.id not in active_sessions:
-        await ctx.send("❌ No active pomodoro.")
+        await ctx.send("❌ No active pomodoro.", delete_after=5)
         return
 
     del active_sessions[ctx.author.id]
 
-    await ctx.send("🛑 Pomodoro stopped.")
+    await ctx.send("🛑 Pomodoro stopped.", delete_after=5)
+
 
 bot.run(TOKEN)
