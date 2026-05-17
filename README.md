@@ -5,7 +5,7 @@
 
 
 
-# 🍅 Pomo
+# 🍅 Pomu
 ### *Pomodoro timer bot for some discord server*
 
 ![Python](https://img.shields.io/badge/Python-3.10+-8b5cf6?style=for-the-badge&logo=python&logoColor=white)
@@ -20,9 +20,9 @@
 
 ---
 
-## ✨ What is Pomo?
+## ✨ What is Pomu?
 
-Pomo is a simple yet powerful Pomodoro timer bot built for focused study sessions. Start a timer, take breaks, and stay productive — all from your Discord server!
+Pomu is a simple yet powerful Pomodoro timer bot built for focused study sessions. Start a timer, take breaks, and stay productive — all from your Discord server!
 
 - 🍅 Customizable study and break durations
 - 🔁 Looping pomodoro cycles
@@ -58,8 +58,8 @@ All commands use the `!pomo` prefix.
 
 ### 1. Clone the repo
 ```bash
-git clone https://github.com/rustyfae/pomo.git
-cd pomo
+git clone https://github.com/rustyfae/pomu.git
+cd pomu
 ```
 
 ### 2. Create virtual environment
@@ -94,7 +94,7 @@ python main.py
 ## 📁 Project Structure
 
 ```
-pomo/
+pomu/
 ├── main.py             ← main bot code
 ├── requirements.txt    ← dependencies
 └── .env                ← your secrets (never give this to anyone!)
