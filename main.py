@@ -46,7 +46,7 @@ async def pomo(ctx, arg1=None, arg2=None, arg3=None):
     if arg1 == "help" or arg1 is None:
 
         embed = discord.Embed(
-            title="🍅 Pomu by rusty.fae",
+            title="🍅 Pomo by rusty.fae",
             description="Simple Pomodoro bot for some discord server",
             color=0x5865F2
         )
