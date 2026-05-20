@@ -12,7 +12,7 @@ TOKEN = os.getenv("TOKEN")
 intents = discord.Intents.all()
 
 bot = commands.Bot(
-    command_prefix='!',
+    command_prefix='!pomo ',
     intents=intents,
     help_command=None
 )
