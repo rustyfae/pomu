@@ -194,8 +194,11 @@ Check current timer
 
             live_embed.set_footer(text="Stay focused ✨")
 
-            if session["remaining"] % 5 == 0:
-                await session["message"].edit(embed=live_embed)
+            if session["remaining"] % 15 == 0:
+                try:
+                    await session["message"].edit(embed=live_embed)
+                except:
+                    pass
 
         await ctx.send(
             f'☕ {ctx.author.mention} Focus session ended!\n'
@@ -257,8 +260,11 @@ Check current timer
 
             live_embed.set_footer(text="Relax a little ☕")
 
-            if session["remaining"] % 5 == 0:
-                await session["message"].edit(embed=live_embed)
+            if session["remaining"] % 15 == 0:
+                try:
+                    await session["message"].edit(embed=live_embed)
+                except:
+                    pass
 
         await ctx.send(
             f'📚 {ctx.author.mention} Break over!\n'
