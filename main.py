@@ -59,13 +59,13 @@ Start 25 minute focus + 5 minute break
 `!pomo 25 5 4`
 Start looping pomodoro
 
-`!pomo pause`
+`!pause`
 Pause timer
 
-`!pomo resume`
+`!resume`
 Resume timer
 
-`!pomo stop`
+`!stop`
 Stop current session
 
 `!pomo status`
