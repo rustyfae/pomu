@@ -68,7 +68,7 @@ Resume timer
 `!stop`
 Stop current session
 
-`!pomo status`
+`!status`
 Check current timer
             """,
             inline=False
